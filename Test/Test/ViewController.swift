@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     lazy var staticViews: [UIView] = {
         var staticViews = [UIView]()
         
-        for _ in 0...10 {
+        for _ in 0...100 {
             staticViews.append(newRandomView())
         }
         
@@ -73,6 +73,54 @@ class ViewController: UIViewController {
             Static.delta = CGPoint(x: mainView.centerX - location.x, y: mainView.centerY - location.y)
         } else if panReco.state == .changed{
             mainView.center = CGPoint(x: location.x + Static.delta.x, y: location.y + Static.delta.y)
+            updateColorIfMinViewIntersect()
+        }
+    }
+    
+    func updateColorIfMinViewIntersect() {
+        var biggestIntersectedView: UIView?
+        for staticView in staticViews {
+            let isStaticViewIntersets = staticView.frame.intersects(mainView.frame)
+            if isStaticViewIntersets {
+                let staticViewArea = staticView.width * staticView.height
+                let biggestIntersectedViewArea = (biggestIntersectedView?.width ?? 0) * (biggestIntersectedView?.height ?? 0)
+                
+                if staticViewArea > biggestIntersectedViewArea {
+                    biggestIntersectedView = staticView
+                }
+            }
+        }
+        
+        if let biggestIntersectedView = biggestIntersectedView {
+            updateMainViewBackgroundWith(biggestIntersectedView)
+        }
+    }
+    
+    func updateMainViewBackgroundWith(_ intersectedView: UIView) {
+        struct Static {
+            static var currentIntersectedView: UIView?
+            static var animating = false
+        }
+
+        guard !Static.animating else {
+            return
+        }
+        
+        if Static.currentIntersectedView == nil || Static.currentIntersectedView != intersectedView {
+            Static.currentIntersectedView = intersectedView
+            
+            Static.animating = true
+            
+            UIView.animate(withDuration: 0.15, animations: {
+                self.mainView.backgroundColor = Static.currentIntersectedView?.backgroundColor
+                self.mainView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            }, completion: { (success) in
+                UIView.animate(withDuration: 0.15, animations: {
+                    self.mainView.transform = .identity
+                }, completion: { (success) in
+                    Static.animating = false
+                })
+            })
         }
     }
     
