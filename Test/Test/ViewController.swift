@@ -13,7 +13,8 @@ class ViewController: UIViewController {
 
     static let maxRandomViewSize = 60
     static let minRandomViewSize = 10
-    
+    static let numberOfViews = 100
+
     //MARK: - Main UI
     
     lazy var mainView: UIView = {
@@ -27,18 +28,23 @@ class ViewController: UIViewController {
         let panReco = UIPanGestureRecognizer(target: self, action: #selector(moveMainView))
         mainView.addGestureRecognizer(panReco)
         
+        let tapReco = UITapGestureRecognizer(target: self, action: #selector(selectView))
+        mainView.addGestureRecognizer(tapReco)
+        
         return mainView
     }()
     
     lazy var staticViews: [UIView] = {
         var staticViews = [UIView]()
         
-        for _ in 0...100 {
+        for _ in 0...ViewController.numberOfViews {
             staticViews.append(newRandomView())
         }
         
         return staticViews
     }()
+    
+    var currentIntersectedView: UIView?
     
     //MARK: - View Lifecycle
     
@@ -77,6 +83,30 @@ class ViewController: UIViewController {
         }
     }
     
+    @objc func selectView(_ tapReco: UITapGestureRecognizer) {
+        
+        guard let currentIntersectedView = currentIntersectedView else {
+            return
+        }
+        
+        currentIntersectedView.layer.borderWidth = 1
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        currentIntersectedView.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        
+        hue += 0.5
+        
+        if hue > 1 {
+            hue -= 1
+        }
+        
+        currentIntersectedView.layer.borderColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).cgColor
+    }
+    
+    //MARK: - Animation
+    
     func updateColorIfMinViewIntersect() {
         var biggestIntersectedView: UIView?
         for staticView in staticViews {
@@ -93,12 +123,13 @@ class ViewController: UIViewController {
         
         if let biggestIntersectedView = biggestIntersectedView {
             updateMainViewBackgroundWith(biggestIntersectedView)
+        } else {
+            currentIntersectedView = nil
         }
     }
     
     func updateMainViewBackgroundWith(_ intersectedView: UIView) {
         struct Static {
-            static var currentIntersectedView: UIView?
             static var animating = false
         }
 
@@ -106,13 +137,13 @@ class ViewController: UIViewController {
             return
         }
         
-        if Static.currentIntersectedView == nil || Static.currentIntersectedView != intersectedView {
-            Static.currentIntersectedView = intersectedView
+        if currentIntersectedView == nil || currentIntersectedView != intersectedView {
+            currentIntersectedView = intersectedView
             
             Static.animating = true
             
             UIView.animate(withDuration: 0.15, animations: {
-                self.mainView.backgroundColor = Static.currentIntersectedView?.backgroundColor
+                self.mainView.backgroundColor = self.currentIntersectedView?.backgroundColor
                 self.mainView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
             }, completion: { (success) in
                 UIView.animate(withDuration: 0.15, animations: {
@@ -141,6 +172,28 @@ class ViewController: UIViewController {
         randomView.backgroundColor = UIColor(hue: randomHue, saturation: 1, brightness: 1, alpha: 1)
 
         return randomView
+    }
+    
+    func spinView(_ currentView: UIView, completion: (() -> Void)? ) {
+        UIView.animate(withDuration: 0.3, animations: {
+            currentView.transform = CGAffineTransform(rotationAngle:CGFloat.pi)
+        }, completion: { (success) in
+            UIView.animate(withDuration: 0.3, animations: {
+                currentView.transform = CGAffineTransform(rotationAngle:CGFloat.pi)
+            }, completion: { (success) in
+                currentView.transform = .identity
+                
+                if let completion = completion {
+                    completion()
+                }
+            })
+        })
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            spinView(mainView, completion: nil)
+        }
     }
 }
 
