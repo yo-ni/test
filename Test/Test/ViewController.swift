@@ -66,48 +66,10 @@ class ViewController: UIViewController {
         mainView.centerInSuperview()
     }
     
-    //MARK: - Gesture
-    
-    @objc func moveMainView(_ panReco: UIPanGestureRecognizer) {
-        struct Static {
-            static var delta: CGPoint = CGPoint.zero
-        }
-        
-        let location = panReco.location(in: view)
-        
-        if panReco.state == .began {
-            Static.delta = CGPoint(x: mainView.centerX - location.x, y: mainView.centerY - location.y)
-        } else if panReco.state == .changed{
-            mainView.center = CGPoint(x: location.x + Static.delta.x, y: location.y + Static.delta.y)
-            updateColorIfMinViewIntersect()
-        }
-    }
-    
-    @objc func selectView(_ tapReco: UITapGestureRecognizer) {
-        
-        guard let currentIntersectedView = currentIntersectedView else {
-            return
-        }
-        
-        currentIntersectedView.layer.borderWidth = 1
-        var hue: CGFloat = 0
-        var saturation: CGFloat = 0
-        var brightness: CGFloat = 0
-        var alpha: CGFloat = 0
-        currentIntersectedView.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        hue += 0.5
-        
-        if hue > 1 {
-            hue -= 1
-        }
-        
-        currentIntersectedView.layer.borderColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).cgColor
-    }
     
     //MARK: - Animation
     
-    func updateColorIfMinViewIntersect() {
+    func updateColorIfMainViewIntersect() {
         var biggestIntersectedView: UIView?
         for staticView in staticViews {
             let isStaticViewIntersets = staticView.frame.intersects(mainView.frame)
@@ -121,38 +83,12 @@ class ViewController: UIViewController {
             }
         }
         
-        if let biggestIntersectedView = biggestIntersectedView {
-            updateMainViewBackgroundWith(biggestIntersectedView)
-        } else {
-            currentIntersectedView = nil
-        }
-    }
-    
-    func updateMainViewBackgroundWith(_ intersectedView: UIView) {
-        struct Static {
-            static var animating = false
-        }
-
-        guard !Static.animating else {
-            return
-        }
         
-        if currentIntersectedView == nil || currentIntersectedView != intersectedView {
-            currentIntersectedView = intersectedView
-            
-            Static.animating = true
-            
-            UIView.animate(withDuration: 0.15, animations: {
-                self.mainView.backgroundColor = self.currentIntersectedView?.backgroundColor
-                self.mainView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-            }, completion: { (success) in
-                UIView.animate(withDuration: 0.15, animations: {
-                    self.mainView.transform = .identity
-                }, completion: { (success) in
-                    Static.animating = false
-                })
-            })
+        if let biggestIntersectedView = biggestIntersectedView, biggestIntersectedView != currentIntersectedView {
+            mainView.backgroundColor = biggestIntersectedView.backgroundColor
         }
+        currentIntersectedView = biggestIntersectedView
+
     }
     
     //MARK: - Helper
@@ -188,6 +124,66 @@ class ViewController: UIViewController {
                 }
             })
         })
+    }
+    
+    func bringToFrontAndBumpView(_ currentView: UIView, completion: (() -> Void)?) {
+        UIView.animate(withDuration: 0.15, animations: {
+            currentView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        }, completion: { (success) in
+            self.view.bringSubview(toFront: currentView)
+            UIView.animate(withDuration: 0.15, animations: {
+                currentView.transform = .identity
+            }, completion: { (success) in
+                
+                if let completion = completion {
+                    completion()
+                }
+            })
+        })
+
+    }
+    
+}
+
+//MARK: - Gesture
+
+extension ViewController {
+    
+    @objc func moveMainView(_ panReco: UIPanGestureRecognizer) {
+        struct Static {
+            static var delta: CGPoint = CGPoint.zero
+        }
+        
+        let location = panReco.location(in: view)
+        
+        if panReco.state == .began {
+            Static.delta = CGPoint(x: mainView.centerX - location.x, y: mainView.centerY - location.y)
+        } else if panReco.state == .changed{
+            mainView.center = CGPoint(x: location.x + Static.delta.x, y: location.y + Static.delta.y)
+            updateColorIfMainViewIntersect()
+        }
+    }
+    
+    @objc func selectView(_ tapReco: UITapGestureRecognizer) {
+        
+        guard let currentIntersectedView = currentIntersectedView else {
+            return
+        }
+        
+        currentIntersectedView.layer.borderWidth = 1
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        currentIntersectedView.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
+        
+        hue += 0.5
+        
+        if hue > 1 {
+            hue -= 1
+        }
+        
+        currentIntersectedView.layer.borderColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).cgColor
     }
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
