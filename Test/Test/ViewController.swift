@@ -12,7 +12,7 @@ import YHUIKit
 class ViewController: UIViewController {
 
     static let maxRandomViewSize = 70
-    static let minRandomViewSize = 5
+    static let minRandomViewSize = 10
     static let numberOfPairs = 10
 
     //MARK: - Main UI
@@ -115,16 +115,41 @@ class ViewController: UIViewController {
         secondRandomView.height = CGFloat(randomHeight)
         secondRandomView.backgroundColor = UIColor(hue: randomHue, saturation: 1, brightness: 1, alpha: 1)
 
-        firstRandomView.x = CGFloat(Int(arc4random()) % (Int(view.bounds.width) - randomWidth))
-        firstRandomView.y = CGFloat(Int(arc4random()) % (Int(view.bounds.height) - randomHeight))
+        
+        firstRandomView.x = randomXValue(firstRandomView.width)
+        firstRandomView.y = randomYValue(firstRandomView.height)
 
-        secondRandomView.x = CGFloat(Int(arc4random()) % (Int(view.bounds.width) - randomWidth))
-        secondRandomView.y = CGFloat(Int(arc4random()) % (Int(view.bounds.height) - randomHeight))
+        secondRandomView.x = randomXValue(secondRandomView.width)
+        secondRandomView.y = randomYValue(secondRandomView.height)
 
 
         return (firstRandomView, secondRandomView)
     }
     
+    func randomXValue(_ viewWidth: CGFloat) -> CGFloat {
+        var safeAreaInset = UIEdgeInsets.zero
+        
+        if #available(iOS 11, *) {
+            safeAreaInset = view.safeAreaInsets
+        }
+        
+        let range = view.bounds.width - viewWidth - safeAreaInset.left - safeAreaInset.right
+        
+        return CGFloat(Int(arc4random()) % Int(range)) + safeAreaInset.left
+    }
+
+    func randomYValue(_ viewHeight: CGFloat) -> CGFloat {
+        var safeAreaInset = UIEdgeInsets.zero
+        
+        if #available(iOS 11, *) {
+            safeAreaInset = view.safeAreaInsets
+        }
+        
+        let range = view.bounds.height - viewHeight - safeAreaInset.top - safeAreaInset.bottom
+        
+        return CGFloat(Int(arc4random()) % Int(range)) + safeAreaInset.top
+    }
+
     
 }
 
