@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DA14B56203F1654004B01CD /* PairView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA14B55203F1654004B01CD /* PairView.swift */; };
 		E94D5F1E2039EF3900B274C3 /* YHUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94D5F1B2039EF2E00B274C3 /* YHUIKit.framework */; };
 		E94D5F1F2039EF3900B274C3 /* YHUIKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E94D5F1B2039EF2E00B274C3 /* YHUIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E95AE7CB2039D9A8005073AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95AE7CA2039D9A8005073AA /* AppDelegate.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0DA14B55203F1654004B01CD /* PairView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairView.swift; sourceTree = "<group>"; };
 		E94D5F152039EF2E00B274C3 /* YHUIKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YHUIKit.xcodeproj; path = ../ui/YHUIKit.xcodeproj; sourceTree = "<group>"; };
 		E95AE7C72039D9A8005073AA /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E95AE7CA2039D9A8005073AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			children = (
 				E95AE7CA2039D9A8005073AA /* AppDelegate.swift */,
 				E95AE7CC2039D9A8005073AA /* ViewController.swift */,
+				0DA14B55203F1654004B01CD /* PairView.swift */,
 				E95AE7CE2039D9A8005073AA /* Main.storyboard */,
 				E95AE7D12039D9A8005073AA /* Assets.xcassets */,
 				E95AE7D32039D9A8005073AA /* LaunchScreen.storyboard */,
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DA14B56203F1654004B01CD /* PairView.swift in Sources */,
 				E95AE7CD2039D9A8005073AA /* ViewController.swift in Sources */,
 				E95AE7CB2039D9A8005073AA /* AppDelegate.swift in Sources */,
 			);

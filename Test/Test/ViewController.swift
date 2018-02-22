@@ -17,8 +17,8 @@ class ViewController: UIViewController {
 
     //MARK: - Main UI
     
-    lazy var mainView: UIView = {
-        let mainView = UIView()
+    lazy var mainView: PairView = {
+        let mainView = PairView()
         mainView.width = 44
         mainView.height = mainView.width
         mainView.backgroundColor = UIColor.blue
@@ -34,8 +34,8 @@ class ViewController: UIViewController {
         return mainView
     }()
     
-    lazy var pairViews: [UIView] = {
-        var pairViews = [UIView]()
+    lazy var pairViews: [PairView] = {
+        var pairViews = [PairView]()
         
         for index in 0...ViewController.numberOfPairs {
             let randomPair = newRandomPair()
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         return pairViews
     }()
     
-    var currentIntersectedView: UIView?
+    var currentIntersectedView: PairView?
     
     //MARK: - View Lifecycle
     
@@ -76,7 +76,7 @@ class ViewController: UIViewController {
     //MARK: - Animation
     
     func updateColorIfMainViewIntersect() {
-        var biggestIntersectedView: UIView?
+        var biggestIntersectedView: PairView?
         for pairView in pairViews {
             let isStaticViewIntersets = pairView.frame.intersects(mainView.frame)
             if isStaticViewIntersets {
@@ -94,14 +94,13 @@ class ViewController: UIViewController {
             mainView.backgroundColor = biggestIntersectedView.backgroundColor
         }
         currentIntersectedView = biggestIntersectedView
-
     }
     
     //MARK: - Helper
     
-    func newRandomPair() -> (UIView, UIView) {
-        let firstRandomView = UIView()
-        let secondRandomView = UIView()
+    func newRandomPair() -> (PairView, PairView) {
+        let firstRandomView = PairView()
+        let secondRandomView = PairView()
         
         let randomWidth = Int(arc4random()) % (ViewController.maxRandomViewSize - ViewController.minRandomViewSize) + ViewController.minRandomViewSize
         let randomHeight = Int(arc4random()) % (ViewController.maxRandomViewSize - ViewController.minRandomViewSize) + ViewController.minRandomViewSize
@@ -175,7 +174,7 @@ extension ViewController {
     @objc func selectView(_ tapReco: UITapGestureRecognizer) {
         
         struct Static {
-            static var firstSelectedView: UIView?
+            static var firstSelectedView: PairView?
         }
         
         guard let currentIntersectedView = currentIntersectedView else {
@@ -184,19 +183,20 @@ extension ViewController {
         
         setViewSelected(currentIntersectedView)
         
-        bringToFrontAndBumpView(currentIntersectedView) {
+        currentIntersectedView.bump(middleCompletion: {
+            self.view.insertSubview(currentIntersectedView, belowSubview: self.mainView)
+        }) {
             if let firstSelectedView = Static.firstSelectedView, currentIntersectedView != firstSelectedView {
                 Static.firstSelectedView = nil
-
+                
                 let arePairsMatched = firstSelectedView.tag == currentIntersectedView.tag
                 
-                self.spinView(firstSelectedView, completion: nil)
-                self.spinView(currentIntersectedView) {
-                    
+                firstSelectedView.spin(completion: nil)
+                currentIntersectedView.spin(completion: {
                     if !arePairsMatched {
                         self.animateViewsOnFail(first: firstSelectedView, second: currentIntersectedView)
                     }
-                }
+                })
                 
                 if arePairsMatched {
                     self.animateViewsOnSuccess(first: firstSelectedView, second: currentIntersectedView, completion: {
@@ -204,53 +204,23 @@ extension ViewController {
                         self.pairViews.remove(at: self.pairViews.index(of: currentIntersectedView)!)
                     })
                 }
-
+                
             } else {
                 Static.firstSelectedView = currentIntersectedView
             }
+
         }
     }
     
     override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            spinView(mainView, completion: nil)
+            mainView.spin(completion: nil)
         }
     }
 }
 
 //MARK: - Animation
 extension ViewController {
-    func spinView(_ currentView: UIView, completion: (() -> Void)? ) {
-        UIView.animate(withDuration: 0.3, animations: {
-            currentView.transform = CGAffineTransform(rotationAngle:CGFloat.pi)
-        }, completion: { (success) in
-            UIView.animate(withDuration: 0.3, animations: {
-                currentView.transform = CGAffineTransform(rotationAngle:CGFloat.pi)
-            }, completion: { (success) in
-                currentView.transform = .identity
-                
-                if let completion = completion {
-                    completion()
-                }
-            })
-        })
-    }
-    
-    func bringToFrontAndBumpView(_ currentView: UIView, completion: (() -> Void)?) {
-        UIView.animate(withDuration: 0.15, animations: {
-            currentView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-        }, completion: { (success) in
-            self.view.insertSubview(currentView, belowSubview: self.mainView)
-            UIView.animate(withDuration: 0.15, animations: {
-                currentView.transform = .identity
-            }, completion: { (success) in
-                
-                if let completion = completion {
-                    completion()
-                }
-            })
-        })
-    }
     
     func animateViewsOnSuccess(first firstCurrentView: UIView, second secondCurrentView: UIView, completion: (() -> Void)?) {
         let finalPosition = CGPoint(x: view.width * 1.5, y: view.height * 1.5)
