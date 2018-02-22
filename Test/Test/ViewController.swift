@@ -181,7 +181,7 @@ extension ViewController {
             return
         }
         
-        setViewSelected(currentIntersectedView)
+        currentIntersectedView.selected = true
         
         currentIntersectedView.bump(middleCompletion: {
             self.view.insertSubview(currentIntersectedView, belowSubview: self.mainView)
@@ -235,26 +235,9 @@ extension ViewController {
         })
     }
 
-    func animateViewsOnFail(first firstCurrentView: UIView, second secondCurrentView: UIView) {
-        firstCurrentView.layer.borderWidth = 0
-        secondCurrentView.layer.borderWidth = 0
-    }
-    
-    func setViewSelected(_ selectedView: UIView) {
-        var hue: CGFloat = 0
-        var saturation: CGFloat = 0
-        var brightness: CGFloat = 0
-        var alpha: CGFloat = 0
-        selectedView.backgroundColor?.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        hue += 0.5
-        
-        if hue > 1 {
-            hue -= 1
-        }
-        
-        selectedView.layer.borderColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: alpha).cgColor
-        selectedView.layer.borderWidth = 2
+    func animateViewsOnFail(first firstCurrentView: PairView, second secondCurrentView: PairView) {
+        firstCurrentView.selected = false
+        secondCurrentView.selected = false
     }
 }
 
