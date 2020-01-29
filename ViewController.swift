@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
     // MARK: - UI components
 
-    private let subview = CTView()
+    private let subview = CollapsibleView()
 
     // MARK: - View lifecycle
 
