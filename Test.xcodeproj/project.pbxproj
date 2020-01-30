@@ -18,6 +18,7 @@
 		E95CA721238ECB0B004BD2D1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95CA720238ECB0B004BD2D1 /* Utils.swift */; };
 		E9D97E9C23E1D37C00551C5A /* CollapsibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D97E9B23E1D37C00551C5A /* CollapsibleView.swift */; };
 		E9D97EC623E1D41B00551C5A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D97EC523E1D41B00551C5A /* GradientView.swift */; };
+		E9D97EDE23E3299B00551C5A /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D97EDD23E3299B00551C5A /* TableViewCell.swift */; };
 		E9E22B4023C73C3500DB4D28 /* FrameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E22B3F23C73C3500DB4D28 /* FrameUtils.swift */; };
 		E9E22B6A23CDBF3C00DB4D28 /* CTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E22B6923CDBF3C00DB4D28 /* CTView.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		E983DE49238EBD8D0009DC14 /* OpenSansSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenSansSwift.framework; sourceTree = "<group>"; };
 		E9D97E9B23E1D37C00551C5A /* CollapsibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleView.swift; sourceTree = "<group>"; };
 		E9D97EC523E1D41B00551C5A /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		E9D97EDD23E3299B00551C5A /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		E9E22B3F23C73C3500DB4D28 /* FrameUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameUtils.swift; sourceTree = "<group>"; };
 		E9E22B6923CDBF3C00DB4D28 /* CTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				E95BF8EA238846900023581B /* ViewController.swift */,
+				E9D97EDD23E3299B00551C5A /* TableViewCell.swift */,
 				E9D97E9B23E1D37C00551C5A /* CollapsibleView.swift */,
 				E9E22B6923CDBF3C00DB4D28 /* CTView.swift */,
 				E95BF8E5238846900023581B /* Test */,
@@ -200,6 +203,7 @@
 				E9D97E9C23E1D37C00551C5A /* CollapsibleView.swift in Sources */,
 				E95CA721238ECB0B004BD2D1 /* Utils.swift in Sources */,
 				E9E22B6A23CDBF3C00DB4D28 /* CTView.swift in Sources */,
+				E9D97EDE23E3299B00551C5A /* TableViewCell.swift in Sources */,
 				E9E22B4023C73C3500DB4D28 /* FrameUtils.swift in Sources */,
 				E95BF8EB238846900023581B /* ViewController.swift in Sources */,
 				E95CA71E238ECA55004BD2D1 /* empty.swift in Sources */,

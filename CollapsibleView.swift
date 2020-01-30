@@ -2,9 +2,10 @@
 import UIKit
 
 class CollapsibleView: UIView {
+    var expandHandler: () -> Void = {}
 
     private let collapsedTextHeight: CGFloat = 128
-    private var extendedConstraint = NSLayoutConstraint()
+    private var collapsedConstraint = NSLayoutConstraint()
 
     // MARK: - UI components
 
@@ -18,7 +19,7 @@ class CollapsibleView: UIView {
     }
 
     private let gradient = GradientView().apply {
-        $0.gradientLayer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
+        $0.gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
         $0.gradientLayer.locations = [0, 0.5]
         $0.gradientLayer.startPoint = .zero
         $0.gradientLayer.endPoint = CGPoint(x: 0, y: 1)
@@ -59,15 +60,15 @@ class CollapsibleView: UIView {
 
     private func setConstraints() {
         label.run {
-            $0.edgesToSuperview(excluding: .bottom, insets: .uniform(8))
+            $0.edgesToSuperview(excluding: .bottom)
             $0.setCompressionResistance(.required, for: .vertical)
         }
 
         gradient.run {
             $0.edgesToSuperview(excluding: .top)
             $0.height(100)
-            $0.topToBottom(of: label, priority: .defaultHigh)
-            self.extendedConstraint = $0.topToSuperview(offset: self.collapsedTextHeight)
+            $0.topToBottom(of: label, priority: .defaultLow)
+            self.collapsedConstraint = $0.topToSuperview(offset: self.collapsedTextHeight, priority: .defaultHigh)
         }
 
         seeMoreButton.run {
@@ -79,11 +80,13 @@ class CollapsibleView: UIView {
     // MARK: - UI Action
 
     @objc private func changeState() {
-        self.extendedConstraint.isActive.toggle()
+        self.collapsedConstraint.isActive.toggle()
 
         UIView.animate(withDuration: 0.5) {
             self.layoutIfNeeded()
         }
+
+        self.expandHandler()
     }
 
 }
