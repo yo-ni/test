@@ -18,10 +18,11 @@ class CollapsibleView: UIView {
     }
 
     private let gradient = GradientView().apply {
-        $0.gradientLayer.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.cgColor]
+        $0.gradientLayer.colors = [UIColor.clear.cgColor, UIColor.white.cgColor]
         $0.gradientLayer.locations = [0, 0.5]
         $0.gradientLayer.startPoint = .zero
         $0.gradientLayer.endPoint = CGPoint(x: 0, y: 1)
+        $0.clipsToBounds = true
     }
 
     private lazy var seeMoreButton = UIButton().apply {
@@ -30,7 +31,6 @@ class CollapsibleView: UIView {
         $0.titleLabel?.font = .systemFont(ofSize: 30)
         $0.addTarget(self, action: #selector(changeState), for: .touchUpInside)
     }
-
 
     // MARK: - View lifecycle
 
