@@ -10,7 +10,7 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
 
-    let subview = CollapsibleView()
+    let collapsibleView = CollapsibleView()
 
 
 
@@ -31,10 +31,10 @@ class TableViewCell: UITableViewCell {
     }
 
     private func buildViewTree() {
-        self.contentView.addSubview(subview)
+        self.contentView.addSubview(collapsibleView)
     }
 
     private func setConstraints() {
-        subview.edgesToSuperview()
+        collapsibleView.edgesToSuperview()
     }
 }

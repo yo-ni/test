@@ -56,11 +56,12 @@ extension ViewController: UITableViewDataSource {
         if
             indexPath.row == 0,
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TableViewCell.self)) as? TableViewCell {
-            cell.subview.expandHandler = {
+            cell.collapsibleView.expandHandler = {
                 self.subview.beginUpdates()
                 self.subview.endUpdates()
 
             }
+            cell.collapsibleView.textView.attributedText = attributed
             return cell
         }
         let cell = UITableViewCell()
