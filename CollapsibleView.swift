@@ -46,42 +46,51 @@ Quid enim tam absurdum quam delectari multis inanimis rebus, ut honore, ut glori
 
 
 let attributed = NSAttributedString(string:
-    """
-        Cum haec taliaque sollicitas eius aures everberarent expositas semper eius modi rumoribus et patentes, varia animo tum miscente consilia, tandem id ut optimum factu elegit: et Vrsicinum primum ad se venire summo cum honore mandavit ea specie ut pro rerum tunc urgentium captu disponeretur concordi consilio, quibus virium incrementis Parthicarum gentium a arma minantium impetus frangerentur.
+"""
+Et quoniam apud eos ut in capite mundi morborum acerbitates celsius dominantur, ad quos vel sedandos omnis professio medendi torpescit, excogitatum est adminiculum sospitale nequi amicum perferentem similia videat, additumque est cautionibus paucis remedium aliud satis validum, ut famulos percontatum missos quem ad modum valeant noti hac aegritudine colligati, non ante recipiant domum quam lavacro purgaverint corpus. ita etiam alienis oculis visa metuitur labes.
 
-        Dum haec in oriente aguntur, Arelate hiemem agens Constantius post theatralis ludos atque circenses ambitioso editos apparatu diem sextum idus Octobres, qui imperii eius annum tricensimum terminabat, insolentiae pondera gravius librans, siquid dubium deferebatur aut falsum, pro liquido accipiens et conperto, inter alia excarnificatum Gerontium Magnentianae comitem partis exulari maerore multavit.
-        """
+Martinus agens illas provincias pro praefectis aerumnas innocentium graviter gemens saepeque obsecrans, ut ab omni culpa inmunibus parceretur, cum non inpetraret, minabatur se discessurum: ut saltem id metuens perquisitor malivolus tandem desineret quieti coalitos homines in aperta pericula proiectare.
+
+Victus universis caro ferina est lactisque abundans copia qua sustentantur, et herbae multiplices et siquae alites capi per aucupium possint, et plerosque mos vidimus frumenti usum et vini penitus ignorantes.
+"""
     , attributes: [.foregroundColor: UIColor.gray, .font: UIFont.systemFont(ofSize: 15)])
 
 
 class CollapsibleView: UIView {
-    var expandHandler: () -> Void = {}
+    var heightWillCHangeHandler: () -> Void = {}
+    var heightDidCHangeHandler: () -> Void = {}
 
     private let collapsedTextHeight: CGFloat = 128
     private var collapsedConstraint = NSLayoutConstraint()
 
     // MARK: - UI components
 
-    let textView = UITextView().apply {
+    private let textView = UITextView().apply {
         $0.isScrollEnabled = false
     }
 
     private let gradient = GradientView().apply {
         $0.gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
-        $0.gradientLayer.locations = [0, 0.5]
         $0.gradientLayer.startPoint = .zero
         $0.gradientLayer.endPoint = CGPoint(x: 0, y: 1)
-        $0.clipsToBounds = true
-        $0.backgroundColor = UIColor.purple.withAlphaComponent(0.8)
     }
 
     private lazy var seeMoreButton = UIButton().apply {
-        $0.setTitle("SEE MORE", for: .normal)
-        $0.setTitleColor(.blue, for: .normal)
-        $0.titleLabel?.font = .systemFont(ofSize: 30)
+        $0.backgroundColor = .white
         $0.addTarget(self, action: #selector(changeState), for: .touchUpInside)
     }
-    
+
+    private let separator = UIView().apply {
+        $0.backgroundColor = .darkGray
+    }
+
+
+
+    private let seeMoreLabel = UILabel().apply {
+        $0.text = "SEE MORE"
+        $0.textColor = .darkGray
+        $0.font = .systemFont(ofSize: 17)
+    }
 
     // MARK: - View lifecycle
 
@@ -104,8 +113,8 @@ class CollapsibleView: UIView {
     }
 
     private func buildViewTree() {
-        [textView, gradient].forEach(self.addSubview)
-        [seeMoreButton].forEach(gradient.addSubview)
+        [textView, gradient, seeMoreButton].forEach(self.addSubview)
+        [separator, seeMoreLabel].forEach(seeMoreButton.addSubview)
     }
 
     private func setConstraints() {
@@ -115,28 +124,55 @@ class CollapsibleView: UIView {
         }
 
         gradient.run {
-            $0.edgesToSuperview(excluding: .top)
-            $0.height(100)
-            $0.topToBottom(of: textView, priority: .defaultLow)
-            self.collapsedConstraint = $0.topToSuperview(offset: self.collapsedTextHeight, priority: .defaultHigh)
+            $0.height(44)
+            $0.bottomToTop(of: seeMoreButton)
+            $0.horizontalToSuperview()
         }
 
         seeMoreButton.run {
-            $0.leadingToSuperview(offset: 16)
-            $0.bottomToSuperview(offset: 8)
+            $0.height(44)
+            $0.topToBottom(of: textView, priority: .defaultLow)
+            $0.edgesToSuperview(excluding: .top)
+            self.collapsedConstraint = $0.topToSuperview(offset: self.collapsedTextHeight, priority: .defaultHigh)
+        }
+
+        separator.run {
+            $0.edgesToSuperview(excluding: .bottom)
+            $0.height(1)
+        }
+
+        seeMoreLabel.run {
+            $0.leadingToSuperview(offset: 8)
+            $0.topToSuperview(offset: 8)
         }
     }
 
     // MARK: - UI Action
 
     @objc private func changeState() {
+        self.heightWillCHangeHandler()
         self.collapsedConstraint.isActive.toggle()
 
         UIView.animate(withDuration: 0.5) {
             self.layoutIfNeeded()
         }
 
-        self.expandHandler()
+        UIView.animate(withDuration: 0.3) {
+            self.gradient.alpha = self.collapsedConstraint.isActive ? 1 : 0
+        }
+
+        self.heightDidCHangeHandler()
+    }
+
+    func setText(_ text: NSAttributedString, forEstimatedWidth estimatedWidth: CGFloat) {
+        textView.attributedText = text
+
+        let size = CGSize(width: estimatedWidth, height: .greatestFiniteMagnitude)
+        let estimatedHeight = textView.sizeThatFits(size).height
+
+        if estimatedHeight < self.collapsedTextHeight {
+            
+        }
     }
 
 }

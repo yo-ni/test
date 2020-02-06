@@ -36,8 +36,6 @@ class ViewController: UIViewController {
     private func buildViewTree() {
         [subview].forEach(self.view.addSubview)
     }
-
-
     
     private func setConstraints() {
 //        subview.horizontalToSuperview(insets: .horizontal(8))
@@ -46,26 +44,31 @@ class ViewController: UIViewController {
     }
 }
 
-
 extension ViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        40
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if
             indexPath.row == 0,
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TableViewCell.self)) as? TableViewCell {
-            cell.collapsibleView.expandHandler = {
-                self.subview.beginUpdates()
-                self.subview.endUpdates()
+            cell.collapsibleView.heightWillCHangeHandler = {
 
+                UIView.animate(withDuration: 0.3) {
+                    self.subview.contentOffset = .zero
+                }
+
+                self.subview.beginUpdates()
             }
-            cell.collapsibleView.textView.attributedText = attributed
+            cell.collapsibleView.heightDidCHangeHandler = {
+                self.subview.endUpdates()
+            }
+            cell.collapsibleView.setText(attributed, forEstimatedWidth: self.view.boundsWidth)
             return cell
         }
         let cell = UITableViewCell()
-        cell.contentView.backgroundColor = .green
+        cell.contentView.backgroundColor = UIColor(hue: .random(in: 0..<1), saturation: 1, brightness: 1, alpha: 1)
         return cell
     }
 
