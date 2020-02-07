@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E956B0B023E974FC0049E114 /* CTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E956B0AE23E974FC0049E114 /* CTView.swift */; };
-		E956B0B123E974FC0049E114 /* CollapsibleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E956B0AF23E974FC0049E114 /* CollapsibleTextView.swift */; };
 		E95BF8E7238846900023581B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95BF8E6238846900023581B /* AppDelegate.swift */; };
 		E95BF8EB238846900023581B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95BF8EA238846900023581B /* ViewController.swift */; };
 		E95BF8EE238846900023581B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E95BF8EC238846900023581B /* Main.storyboard */; };
@@ -40,7 +39,6 @@
 
 /* Begin PBXFileReference section */
 		E956B0AE23E974FC0049E114 /* CTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTView.swift; sourceTree = "<group>"; };
-		E956B0AF23E974FC0049E114 /* CollapsibleTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTextView.swift; sourceTree = "<group>"; };
 		E95BF8E3238846900023581B /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E95BF8E6238846900023581B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E95BF8EA238846900023581B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,7 +76,6 @@
 				E95BF8EA238846900023581B /* ViewController.swift */,
 				E9D97EDD23E3299B00551C5A /* TableViewCell.swift */,
 				E9D97E9B23E1D37C00551C5A /* CollapsibleView.swift */,
-				E956B0AF23E974FC0049E114 /* CollapsibleTextView.swift */,
 				E956B0AE23E974FC0049E114 /* CTView.swift */,
 				E95BF8E5238846900023581B /* Test */,
 				E95CA70E238EC521004BD2D1 /* TestFramework */,
@@ -205,7 +202,6 @@
 			files = (
 				E9D97E9C23E1D37C00551C5A /* CollapsibleView.swift in Sources */,
 				E95CA721238ECB0B004BD2D1 /* Utils.swift in Sources */,
-				E956B0B123E974FC0049E114 /* CollapsibleTextView.swift in Sources */,
 				E9D97EDE23E3299B00551C5A /* TableViewCell.swift in Sources */,
 				E9E22B4023C73C3500DB4D28 /* FrameUtils.swift in Sources */,
 				E95BF8EB238846900023581B /* ViewController.swift in Sources */,
