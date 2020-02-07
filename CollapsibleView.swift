@@ -1,16 +1,25 @@
 
 import UIKit
 
-class CollapsibleView: UIView {
-    var heightWillCHangeHandler: () -> Void = {}
-    var heightDidCHangeHandler: () -> Void = {}
+public class CollapsibleView: UIView {
+    public var heightWillCHangeHandler: () -> Void = {}
+    public var heightDidCHangeHandler: () -> Void = {}
+    
+    public var textViewDelegate: UITextViewDelegate? {
+        get {
+            return textView.delegate
+        }
+        set {
+            textView.delegate = newValue
+        }
+    }
 
     private let collapsedTextHeight: CGFloat = 128
     private var collapsedConstraint = NSLayoutConstraint()
 
     // MARK: - UI components
 
-    private let textView = UITextView().apply {
+    public let textView = UITextView().apply {
         $0.isScrollEnabled = false
     }
 
@@ -109,7 +118,7 @@ class CollapsibleView: UIView {
         self.heightDidCHangeHandler()
     }
 
-    func setText(_ text: NSAttributedString, forEstimatedWidth estimatedWidth: CGFloat) {
+    public func setText(_ text: NSAttributedString?, forEstimatedWidth estimatedWidth: CGFloat) {
         textView.attributedText = text
 
         let size = CGSize(width: estimatedWidth, height: .greatestFiniteMagnitude)
