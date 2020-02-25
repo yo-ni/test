@@ -8,16 +8,19 @@
 
 import UIKit
 
+
 class TableViewCell: UITableViewCell {
 
     let collapsibleView = CollapsibleView()
-
 
 
     // MARK: - View lifecycle
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        let truc = "ewifyubwef"
+
+        print (truc)
         setupView()
     }
 
@@ -28,6 +31,8 @@ class TableViewCell: UITableViewCell {
     private func setupView() {
         buildViewTree()
         setConstraints()
+       
+
     }
 
     private func buildViewTree() {
