@@ -11,26 +11,10 @@
 // also https://www.raywenderlich.com/578-core-text-tutorial-for-ios-making-a-magazine-app
 
 
-
 /*
-
- Rien dans le ciel étoilé ne laissait prévoir que des choses étranges et mystérieuses allaient bien se produire.
- Alors que les Moldus dormaient du sommeil de l'innocence, une énorme moto chevauchée par un véritable géant, perça les ténèbres.
- Le géant, qui répondait au nom de Hagrid, laissa un petit tas de couverture devant la porte du 4, Privet Drive. Niché au cœur de ce paquet rudimentaire dormait un bébé... » « Harry Potter... Le survivant!
-
- 
- */
-
-/*
- 
-div>Rien dans le ciel <u>6</u> ne laissait prévoir que des choses étranges et <u>12</u> allaient bien se produire. Alors que les Moldus dormaient du sommeil de l\'innocence, une énorme moto chevauchée par un véritable <u>5</u>, perça les ténèbres. Le géant, qui répondait au nom de <u>6</u>, laissa un petit tas de couverture devant la porte du 4, Privet Drive. Niché au cœur de ce paquet rudimentaire dormait un bébé... » « Harry Potter... Le <u>9</u>!
- */
-
-
-/*
-
+ - a special invisible attribute set has been set to the blank locations so we can retrieve those positions later
  - have a label to know the view size with autolayout (not uitextview. it renders text differently from CTFrame)
- - bottom padding because textfields may not display, 2 px is ok\
+ - bottom padding added to the label because sometimes it sends the wrong size to autolayout. 2 px seems ok
  - add invisible last char to attributedString. It might not display entirely otherwise
  */
 
@@ -43,7 +27,7 @@ class FillTheBlanksView: UIView {
         var blanksLocation: [Int]
     }
 
-    private static let textSize: CGFloat = 20
+    private static let textSize: CGFloat = 14
     private static let blankString = String(repeating: "\u{00a0}", count: 30)
     private static let blankAttributes = [NSAttributedString.Key.underlineColor : UIColor.green]
     private let verticalPadding: CGFloat = 0
@@ -131,6 +115,16 @@ class FillTheBlanksView: UIView {
                     textField.y = self.boundsHeight - lineOrigins[lineIndex].y - textField.frameHeight + descent + self.verticalPadding
                 }
             }
+
+            
+            let lineView  = UIView().apply {
+                $0.backgroundColor = .blue
+                $0.x = 0
+                $0.frameWidth = self.boundsWidth
+                $0.frameHeight = 1
+                $0.y = self.boundsHeight - lineOrigins[lineIndex].y
+            }
+            self.addSubview(lineView)
         }
     }
 
