@@ -139,11 +139,17 @@ class FillTheBlanksView: UIView {
     
     private func createTextField() -> UITextField {
         return UITextField().apply {
-            $0.backgroundColor = .white
+            $0.backgroundColor = .clear
             $0.font = UIFont.boldSystemFont(ofSize: FillTheBlanksView.textSize)
             $0.textColor = .black
-            $0.layer.cornerRadius = 4
             $0.autocapitalizationType = .none
+            $0.delegate = self
+            
+            $0.layer.apply {
+                $0.cornerRadius = 4
+                $0.borderWidth = 1
+                $0.borderColor = UIColor.white.withAlphaComponent(0.4).cgColor
+            }
                                     
             $0.leftView = UIView().apply { $0.frameWidth = 8 }
             $0.rightView = UIView().apply { $0.frameWidth = 8 }
@@ -194,6 +200,26 @@ class FillTheBlanksView: UIView {
             let textField = self.createTextField()
             self.textFields.append(textField)
             addSubview(textField)
+        }
+    }
+}
+
+
+extension FillTheBlanksView: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.3) {
+            textField.backgroundColor = .white
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let isEmpty = textField.text?.isEmpty ?? true
+        
+        UIView.animate(withDuration: 0.3) {
+            textField.backgroundColor = isEmpty
+                ? .clear
+                : .white
         }
     }
 }
