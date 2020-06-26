@@ -143,6 +143,7 @@ class FillTheBlanksView: UIView {
             $0.font = UIFont.boldSystemFont(ofSize: FillTheBlanksView.textSize)
             $0.textColor = .black
             $0.autocapitalizationType = .none
+            $0.autocorrectionType = .no
             $0.delegate = self
             
             $0.layer.apply {
@@ -180,7 +181,7 @@ class FillTheBlanksView: UIView {
                 attributes: [.foregroundColor : UIColor.clear]))
             
             let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 2
+            paragraphStyle.lineSpacing = 14
             $0.addAttributes(
                 [
                     .font: UIFont.systemFont(ofSize: FillTheBlanksView.textSize),
