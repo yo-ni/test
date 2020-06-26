@@ -9,7 +9,7 @@
 import UIKit
 
 
-class TableViewCell: UITableViewCell {
+class CollapsibleCell: UITableViewCell {
 
     let collapsibleView = CollapsibleView()
 

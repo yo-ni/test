@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E956B0B023E974FC0049E114 /* CTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E956B0AE23E974FC0049E114 /* CTView.swift */; };
+		E915D37024A5F783007FB26B /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E915D36F24A5F783007FB26B /* ColorConstants.swift */; };
+		E94DB16A249BC27700CAD775 /* SwiftSoup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94DB169249BC27700CAD775 /* SwiftSoup.framework */; };
+		E94DB16B249BC27700CAD775 /* SwiftSoup.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E94DB169249BC27700CAD775 /* SwiftSoup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E956B0B023E974FC0049E114 /* FillTheBlanksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E956B0AE23E974FC0049E114 /* FillTheBlanksView.swift */; };
 		E95BF8E7238846900023581B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95BF8E6238846900023581B /* AppDelegate.swift */; };
 		E95BF8EB238846900023581B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95BF8EA238846900023581B /* ViewController.swift */; };
 		E95BF8EE238846900023581B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E95BF8EC238846900023581B /* Main.storyboard */; };
@@ -19,7 +22,7 @@
 		E95CA721238ECB0B004BD2D1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95CA720238ECB0B004BD2D1 /* Utils.swift */; };
 		E9D97E9C23E1D37C00551C5A /* CollapsibleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D97E9B23E1D37C00551C5A /* CollapsibleView.swift */; };
 		E9D97EC623E1D41B00551C5A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D97EC523E1D41B00551C5A /* GradientView.swift */; };
-		E9D97EDE23E3299B00551C5A /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D97EDD23E3299B00551C5A /* TableViewCell.swift */; };
+		E9D97EDE23E3299B00551C5A /* CollapsibleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D97EDD23E3299B00551C5A /* CollapsibleCell.swift */; };
 		E9E22B4023C73C3500DB4D28 /* FrameUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E22B3F23C73C3500DB4D28 /* FrameUtils.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +34,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				E95BF900238846EA0023581B /* TinyConstraints.framework in Embed Frameworks */,
+				E94DB16B249BC27700CAD775 /* SwiftSoup.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,7 +42,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E956B0AE23E974FC0049E114 /* CTView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CTView.swift; sourceTree = "<group>"; };
+		E915D36F24A5F783007FB26B /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
+		E94DB169249BC27700CAD775 /* SwiftSoup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftSoup.framework; path = Carthage/Build/iOS/SwiftSoup.framework; sourceTree = "<group>"; };
+		E956B0AE23E974FC0049E114 /* FillTheBlanksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FillTheBlanksView.swift; sourceTree = "<group>"; };
 		E95BF8E3238846900023581B /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E95BF8E6238846900023581B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E95BF8EA238846900023581B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,7 +60,7 @@
 		E983DE49238EBD8D0009DC14 /* OpenSansSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenSansSwift.framework; sourceTree = "<group>"; };
 		E9D97E9B23E1D37C00551C5A /* CollapsibleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleView.swift; sourceTree = "<group>"; };
 		E9D97EC523E1D41B00551C5A /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		E9D97EDD23E3299B00551C5A /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		E9D97EDD23E3299B00551C5A /* CollapsibleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleCell.swift; sourceTree = "<group>"; };
 		E9E22B3F23C73C3500DB4D28 /* FrameUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,21 +70,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				E95BF8FF238846EA0023581B /* TinyConstraints.framework in Frameworks */,
+				E94DB16A249BC27700CAD775 /* SwiftSoup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E94DB168249BC27700CAD775 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E94DB169249BC27700CAD775 /* SwiftSoup.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E95BF8DA238846900023581B = {
 			isa = PBXGroup;
 			children = (
 				E95BF8EA238846900023581B /* ViewController.swift */,
-				E9D97EDD23E3299B00551C5A /* TableViewCell.swift */,
+				E9D97EDD23E3299B00551C5A /* CollapsibleCell.swift */,
 				E9D97E9B23E1D37C00551C5A /* CollapsibleView.swift */,
-				E956B0AE23E974FC0049E114 /* CTView.swift */,
+				E956B0AE23E974FC0049E114 /* FillTheBlanksView.swift */,
 				E95BF8E5238846900023581B /* Test */,
 				E95CA70E238EC521004BD2D1 /* TestFramework */,
+				E94DB168249BC27700CAD775 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +113,7 @@
 				E9E22B3F23C73C3500DB4D28 /* FrameUtils.swift */,
 				E9D97EC523E1D41B00551C5A /* GradientView.swift */,
 				E95CA720238ECB0B004BD2D1 /* Utils.swift */,
+				E915D36F24A5F783007FB26B /* ColorConstants.swift */,
 				E95BF8E4238846900023581B /* Products */,
 				E95BF8FA238846EA0023581B /* Frameworks */,
 				E95BF8E6238846900023581B /* AppDelegate.swift */,
@@ -202,12 +219,13 @@
 			files = (
 				E9D97E9C23E1D37C00551C5A /* CollapsibleView.swift in Sources */,
 				E95CA721238ECB0B004BD2D1 /* Utils.swift in Sources */,
-				E9D97EDE23E3299B00551C5A /* TableViewCell.swift in Sources */,
+				E9D97EDE23E3299B00551C5A /* CollapsibleCell.swift in Sources */,
+				E915D37024A5F783007FB26B /* ColorConstants.swift in Sources */,
 				E9E22B4023C73C3500DB4D28 /* FrameUtils.swift in Sources */,
 				E95BF8EB238846900023581B /* ViewController.swift in Sources */,
 				E95CA71E238ECA55004BD2D1 /* empty.swift in Sources */,
 				E9D97EC623E1D41B00551C5A /* GradientView.swift in Sources */,
-				E956B0B023E974FC0049E114 /* CTView.swift in Sources */,
+				E956B0B023E974FC0049E114 /* FillTheBlanksView.swift in Sources */,
 				E95BF8E7238846900023581B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

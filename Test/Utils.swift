@@ -4,6 +4,7 @@ import TinyConstraints
 
 public protocol ScopeFunc {}
 extension ScopeFunc {
+    @discardableResult
     @inline(__always) public func apply(block: (Self) -> ()) -> Self {
         block(self)
         return self

@@ -1,74 +1,48 @@
 
 import UIKit
 import TinyConstraints
-import OpenSansSwift
+import WebKit
+
+
+let text = "Rien dans le ciel  ne laissait prévoir que des choses étranges et  allaient bien se produire. Alors que les Moldus dormaient du sommeil de l'innocence, une énorme moto chevauchée par un véritable  perça les ténèbres. Le géant, qui répondait au nom de , laissa un petit tas de couverture devant la porte du 4, Privet Drive. Niché au cœur de ce paquet rudimentaire dormait un bébé... Harry Potter... Le !"
+let locations = [18, 66, 196, 251, 401]
 
 class ViewController: UIViewController {
 
     // MARK: - UI components
 
-    private let scrollview = UIScrollView().apply {
-        $0.backgroundColor = .purple
-    }
-
-    private let contentView = UIView().apply {
-        $0.backgroundColor = .orange
-    }
-
-    private  let subview1 = UIView().apply {
-        $0.backgroundColor = .green
-    }
-
-    private let subview2 = UIView().apply {
-        $0.backgroundColor = .blue
+    private let subview = FillTheBlanksView().apply {
+        $0.text = .init(string: text, blanksLocation: locations)
     }
 
     // MARK: - View lifecycle
+    
+    override func loadView() {
+        self.view = GradientView().apply {
+            $0.gradientLayer.colors = ["#9A87FE", "#4286ED", "#00F0AF"]
+                .map { UIColor(hex: $0).cgColor }
+            $0.gradientLayer.locations = [-0.3, 0.5, 1.2]
+            $0.gradientLayer.startPoint = CGPoint(x: 0, y: 1)
+            $0.gradientLayer.endPoint = CGPoint(x: 1, y: 0)
+        }
+    }
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
 
         buildViewTree()
         setConstraints()
     }
-    @objc
+
     private func buildViewTree() {
-        [scrollview].forEach(self.view.addSubview)
-        [contentView].forEach(scrollview.addSubview)
-        [subview1, subview2].forEach(contentView.addSubview)
+        [subview].forEach(self.view.addSubview)
     }
     
     private func setConstraints() {
-        scrollview.edgesToSuperview(insets: .uniform(16), usingSafeArea: true)
-
-        contentView.run {
-            $0.edgesToSuperview()
-            $0.widthToSuperview()
-            $0.heightToSuperview(priority: .defaultHigh)
+        
+        subview.run {
+            $0.horizontalToSuperview(insets: .horizontal(16))
+            $0.centerInSuperview()
         }
-
-        subview1.run {
-            $0.width(100)
-            $0.height(700)
-
-            $0.topToSuperview()
-            $0.leftToSuperview()
-        }
-
-        subview2.run {
-            $0.width(200)
-            $0.height(800)
-
-
-            $0.topToBottom(of: subview1, offset: 16)
-            $0.leftToSuperview()
-            $0.bottomToSuperview()
-        }
-
-
-
-
-
     }
 }
