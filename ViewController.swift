@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     // MARK: - UI components
 
     private let subview = FillTheBlanksView().apply {
-        $0.text = .init(string: text, blanksLocation: locations)
+        $0.text = .init(string: text, blankLocations: locations)
     }
     
     private let scrollview = UIScrollView()
@@ -39,19 +39,12 @@ class ViewController: UIViewController {
     }
 
     private func buildViewTree() {
-        [scrollview].forEach(self.view.addSubview)
-        [subview].forEach(scrollview.addSubview)
+        [subview].forEach(self.view.addSubview)
     }
     
     private func setConstraints() {
-        scrollview.apply {
-            $0.edgesToSuperview(insets: .horizontal(16), usingSafeArea: true)
-        }
-
         subview.run {
-            $0.edgesToSuperview()
-            $0.widthToSuperview()
-            $0.heightToSuperview(priority: .defaultLow)
+            $0.edgesToSuperview(insets: .horizontal(16), usingSafeArea: true)
         }
     }
 }
