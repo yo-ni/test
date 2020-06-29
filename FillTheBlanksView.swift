@@ -54,11 +54,10 @@ class FillTheBlanksView: UIScrollView {
 fileprivate class FillTheBlanksContentView: UIView {
     
 
-    private static let textSize: CGFloat = 30
+    private static let textSize: CGFloat = 14
     private static let blankString = String(repeating: "\u{00a0}", count: 30)
     private static let blankAttributeKey = NSAttributedString.Key.underlineColor
     private static let blankAttributes = [ blankAttributeKey: UIColor.green]
-    private let verticalPadding: CGFloat = 0
     
     private var attribuedString = NSAttributedString()
     private lazy var heightConstraint = self.height(0, priority: .defaultHigh)
@@ -124,6 +123,7 @@ fileprivate class FillTheBlanksContentView: UIView {
             $0.textColor = .black
             $0.autocapitalizationType = .none
             $0.autocorrectionType = .no
+            $0.textAlignment = .center
             $0.delegate = self
             
             $0.layer.apply {
@@ -200,9 +200,9 @@ fileprivate class FillTheBlanksContentView: UIView {
                     var descent: CGFloat = 0
                     
                     textField.frameWidth = CGFloat(CTRunGetTypographicBounds(run, .zero, &ascent, &descent, nil))
-                    textField.frameHeight = ascent + descent + 2 * self.verticalPadding
+                    textField.frameHeight = 28
                     textField.x = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, nil)
-                    textField.y = self.boundsHeight - lineOrigins[lineIndex].y - textField.frameHeight + descent + self.verticalPadding
+                    textField.centerY = self.boundsHeight - lineOrigins[lineIndex].y + descent - (ascent +  descent)/2
                 }
             }
         }
