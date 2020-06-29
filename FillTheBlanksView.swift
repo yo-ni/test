@@ -53,9 +53,8 @@ class FillTheBlanksView: UIScrollView {
 
 fileprivate class FillTheBlanksContentView: UIView {
     
-
     private static let textSize: CGFloat = 14
-    private static let blankString = String(repeating: "\u{00a0}", count: 30)
+    private static let blankString = String(repeating: .nbsp, count: 35)
     private static let blankAttributeKey = NSAttributedString.Key.underlineColor
     private static let blankAttributes = [ blankAttributeKey: UIColor.green]
     
@@ -143,10 +142,15 @@ fileprivate class FillTheBlanksContentView: UIView {
         let attributedString = NSMutableAttributedString(string: string)
               
         blanksLocation.reversed().forEach { location in
-            let blankAttributedString = NSAttributedString(
-                string: FillTheBlanksContentView.blankString,
-                attributes: FillTheBlanksContentView.blankAttributes
-            )
+            let blankAttributedString = NSMutableAttributedString().apply {
+                $0.append(NSAttributedString(string: .nbsp))
+                $0.append(NSAttributedString(
+                    string: FillTheBlanksContentView.blankString,
+                    attributes: FillTheBlanksContentView.blankAttributes
+                ))
+                $0.append(NSAttributedString(string: .nbsp))
+            }
+            
             attributedString.insert(blankAttributedString, at: location)
         }
         
@@ -227,4 +231,9 @@ extension FillTheBlanksContentView: UITextFieldDelegate {
                 : .white
         }
     }
+}
+
+
+private extension String {
+    static let nbsp = "\u{00a0}"
 }
