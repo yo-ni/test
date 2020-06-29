@@ -45,7 +45,7 @@ class ViewController: UIViewController {
     
     private func setConstraints() {
         scrollview.apply {
-            $0.edgesToSuperview(usingSafeArea: true)
+            $0.edgesToSuperview(insets: .horizontal(16), usingSafeArea: true)
         }
 
         subview.run {

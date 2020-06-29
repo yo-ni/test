@@ -1,17 +1,8 @@
-//
-//  CTView.swift
-//  test
-//
-//  Created by Yoni on 10/01/2020.
-//  Copyright © 2020 Yoni. All rights reserved.
-//
-
-
-// see https://danielgorst.wordpress.com/2012/07/30/embedding-a-hyperlink-into-coretext/
-// also https://www.raywenderlich.com/578-core-text-tutorial-for-ios-making-a-magazine-app
-
 
 /*
+ see https://www.raywenderlich.com/578-core-text-tutorial-for-ios-making-a-magazine-app
+ also https://danielgorst.wordpress.com/2012/07/30/embedding-a-hyperlink-into-coretext/
+
  - a special invisible attribute set has been set to the blank locations so we can retrieve those positions later
  - have a label to know the view size with autolayout (not uitextview. it renders text differently from CTFrame)
  - bottom padding added to the label because sometimes it sends the wrong size to autolayout. 2 px seems ok
@@ -35,18 +26,19 @@ class FillTheBlanksView: UIView {
     
     var text = Text(string: "", blanksLocation: []) {
         didSet {
-            label.attributedText = computeAttributedText(string: text.string, blanksLocation: text.blanksLocation)
+            self.attribuedString = computeAttributedText(string: text.string, blanksLocation: text.blanksLocation)
             updateTextFieldCount(text.blanksLocation.count)
         }
     }
     
-    // MARK: - UI components
-        
-    private let label = UILabel().apply {
-        $0.numberOfLines = 0
-        $0.textColor = .white
+    private var attribuedString = NSAttributedString() {
+        didSet {
+            self.setNeedsLayout()
+        }
     }
     
+    // MARK: - UI components
+
     private var textFields = [UITextField]()
     
     // MARK: - View lifecycle
@@ -62,23 +54,21 @@ class FillTheBlanksView: UIView {
     
     private func setupView() {
         self.contentMode = .redraw
+        self.backgroundColor = UIColor.clear
 
         buildViewTree()
         setConstraints()
     }
     
     private func buildViewTree() {
-        [label].forEach(self.addSubview)
     }
     
     private func setConstraints() {
-        label.edgesToSuperview(insets: .bottom(2))
     }
 
     override func draw(_ rect: CGRect) {
         guard
-            let context = UIGraphicsGetCurrentContext(),
-            let attributedText = self.label.attributedText
+            let context = UIGraphicsGetCurrentContext()
         else { return }
 
         context.textMatrix = .identity
@@ -88,13 +78,19 @@ class FillTheBlanksView: UIView {
         let boundsPath = CGMutablePath()
         boundsPath.addRect(self.bounds)
                 
-        let frameSetter = CTFramesetterCreateWithAttributedString(attributedText)
+        let frameSetter = CTFramesetterCreateWithAttributedString(self.attribuedString)
+        let textFrame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(0, self.attribuedString.length), boundsPath, nil)
         
-        let textFrame = CTFramesetterCreateFrame(frameSetter, CFRangeMake(0, attributedText.length), boundsPath, nil)
+        CTFrameDraw(textFrame, context)
+
         let lines = CTFrameGetLines(textFrame) as! [CTLine]
         var lineOrigins = [CGPoint](repeating: .zero, count: lines.count)
         CTFrameGetLineOrigins(textFrame, .zero, &lineOrigins)
     
+        let calculedHeight = CTFramesetterSuggestFrameSizeWithConstraints(frameSetter, CFRangeMake(0, self.attribuedString.length), nil, CGSize(width: self.boundsWidth, height: .greatestFiniteMagnitude), nil).height
+
+        self.height(calculedHeight, priority: .defaultHigh)
+        
         var textFieldIndex = 0
         
         for (lineIndex, line) in lines.enumerated() {
@@ -115,16 +111,6 @@ class FillTheBlanksView: UIView {
                     textField.y = self.boundsHeight - lineOrigins[lineIndex].y - textField.frameHeight + descent + self.verticalPadding
                 }
             }
-
-            
-            let lineView  = UIView().apply {
-                $0.backgroundColor = .blue
-                $0.x = 0
-                $0.frameWidth = self.boundsWidth
-                $0.frameHeight = 1
-                $0.y = self.boundsHeight - lineOrigins[lineIndex].y
-            }
-            self.addSubview(lineView)
         }
     }
 
@@ -170,15 +156,16 @@ class FillTheBlanksView: UIView {
         attributedString.apply {
 
             // needed because UILabel is buggy with some attributed texts
-            $0.append(NSAttributedString(
-                string: ".",
-                attributes: [.foregroundColor : UIColor.clear]))
+//            $0.append(NSAttributedString(
+//                string: ".",
+//                attributes: [.foregroundColor : UIColor.clear]))
             
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 14
             $0.addAttributes(
                 [
                     .font: UIFont.systemFont(ofSize: FillTheBlanksView.textSize),
+                    .foregroundColor: UIColor.white.cgColor,
                     .paragraphStyle: paragraphStyle
                 ],
                 range: NSRange(location: 0, length: $0.length))
@@ -203,7 +190,7 @@ class FillTheBlanksView: UIView {
 extension FillTheBlanksView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.2) {
             textField.backgroundColor = .white
         }
     }
@@ -211,7 +198,7 @@ extension FillTheBlanksView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         let isEmpty = textField.text?.isEmpty ?? true
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.2) {
             textField.backgroundColor = isEmpty
                 ? .clear
                 : .white
