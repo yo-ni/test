@@ -1,0 +1,3 @@
+[submodule "ui"]
+	path = ui
+	url = git@github.com:yo-ni/ui.git

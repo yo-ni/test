@@ -1,7 +1,7 @@
 
-import UIKit
 import TinyConstraints
-import WebKit
+import UI
+import UIKit
 
 
 let text = "Rien dans le ciel  ne laissait prévoir que des choses étranges et  allaient bien se produire. Alors que les Moldus dormaient du sommeil de l'innocence, une énorme moto chevauchée par un véritable  perça les ténèbres. Le géant, qui répondait au nom de , laissa un petit tas de couverture devant la porte du 4, Privet Drive. Niché au cœur de ce paquet rudimentaire dormait un bébé... Harry Potter... Le !"
@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     // MARK: - UI components
 
     private let subview = FillTheBlanksView().apply {
-        $0.text = .init(string: text, blankLocations: locations)
+        $0.text = FillTheBlanksView.Text(string: text, blankLocations: locations)
     }
     
     private let scrollview = UIScrollView()
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     override func loadView() {
         self.view = GradientView().apply {
-            $0.gradientLayer.colors = ["#9A87FE", "#4286ED", "#00F0AF"]
+            $0.gradientLayer.colors = [0x9A87FE, 0x4286ED, 0x00F0AF]
                 .map { UIColor(hex: $0).cgColor }
             $0.gradientLayer.locations = [-0.3, 0.5, 1.2]
             $0.gradientLayer.startPoint = CGPoint(x: 0, y: 1)
