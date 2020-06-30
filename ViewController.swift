@@ -44,7 +44,9 @@ class ViewController: UIViewController {
     
     private func setConstraints() {
         subview.run {
-            $0.edgesToSuperview(insets: .horizontal(16), usingSafeArea: true)
+            $0.horizontalToSuperview(insets: .horizontal(16), usingSafeArea: true)
+            $0.topToSuperview(usingSafeArea: true)
+            $0.bottomToSuperview().keyboardAware()
         }
     }
 }
