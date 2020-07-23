@@ -7,6 +7,7 @@ import UIKit
 let text = "Rien dans le ciel  ne laissait prévoir que des choses étranges et  allaient bien se produire. Alors que les Moldus dormaient du sommeil de l'innocence, une énorme moto chevauchée par un véritable  perça les ténèbres. Le géant, qui répondait au nom de , laissa un petit tas de couverture devant la porte du 4, Privet Drive. Niché au cœur de ce paquet rudimentaire dormait un bébé... Harry Potter... Le !"
 let locations = [18, 66, 196, 251, 401]
 
+
 class ViewController: UIViewController {
 
     // MARK: - UI components
@@ -48,5 +49,9 @@ class ViewController: UIViewController {
             $0.topToSuperview(usingSafeArea: true)
             $0.bottomToSuperview().keyboardAware()
         }
+    }
+    
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        subview.focusFirstBlank()
     }
 }
