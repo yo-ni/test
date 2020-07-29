@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E94DB16A249BC27700CAD775 /* SwiftSoup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94DB169249BC27700CAD775 /* SwiftSoup.framework */; };
-		E94DB16B249BC27700CAD775 /* SwiftSoup.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E94DB169249BC27700CAD775 /* SwiftSoup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E95BF8E7238846900023581B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95BF8E6238846900023581B /* AppDelegate.swift */; };
 		E95BF8EB238846900023581B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95BF8EA238846900023581B /* ViewController.swift */; };
 		E95BF8EE238846900023581B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E95BF8EC238846900023581B /* Main.storyboard */; };
@@ -68,7 +66,6 @@
 			files = (
 				E9F71D5D24AB906A00903CE2 /* UI.framework in Embed Frameworks */,
 				E95BF900238846EA0023581B /* TinyConstraints.framework in Embed Frameworks */,
-				E94DB16B249BC27700CAD775 /* SwiftSoup.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,7 +73,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E94DB169249BC27700CAD775 /* SwiftSoup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftSoup.framework; path = Carthage/Build/iOS/SwiftSoup.framework; sourceTree = "<group>"; };
 		E95BF8E3238846900023581B /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E95BF8E6238846900023581B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E95BF8EA238846900023581B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +96,6 @@
 			files = (
 				E9F71D5C24AB906A00903CE2 /* UI.framework in Frameworks */,
 				E95BF8FF238846EA0023581B /* TinyConstraints.framework in Frameworks */,
-				E94DB16A249BC27700CAD775 /* SwiftSoup.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +105,6 @@
 		E94DB168249BC27700CAD775 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E94DB169249BC27700CAD775 /* SwiftSoup.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
